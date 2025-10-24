@@ -20,7 +20,7 @@
 1. **Клонируйте репозиторий:**
    ```bash
    git clone https://github.com/holokinovoro/test-task.git
-   cd user-phone-management
+   
 2. **Запустите через docker-compose**
   docker compose up --build
 3. После сборки открой в браузере:
