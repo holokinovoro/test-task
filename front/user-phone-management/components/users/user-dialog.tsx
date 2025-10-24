@@ -30,6 +30,7 @@ export function UserDialog({ open, onOpenChange, user, onSave }: UserDialogProps
     dateOfBirth: "",
   })
   const [loading, setLoading] = useState(false)
+  const [emailError, setEmailError] = useState("")
 
   useEffect(() => {
     if (user) {
@@ -45,10 +46,45 @@ export function UserDialog({ open, onOpenChange, user, onSave }: UserDialogProps
         dateOfBirth: "",
       })
     }
+    setEmailError("")
   }, [user, open])
+
+  const validateEmail = (email: string): boolean => {
+    if (!email) {
+      setEmailError("Email обязателен")
+      return false
+    }
+
+    // Check for valid email format with proper domain (e.g., user@example.com)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/
+
+    if (!emailRegex.test(email)) {
+      setEmailError("Введите корректный email (например, user@example.com)")
+      return false
+    }
+
+    setEmailError("")
+    return true
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value
+    setFormData({ ...formData, email: newEmail })
+
+    if (newEmail) {
+      validateEmail(newEmail)
+    } else {
+      setEmailError("")
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!validateEmail(formData.email)) {
+      return
+    }
+
     setLoading(true)
     try {
       if (user) {
@@ -63,6 +99,8 @@ export function UserDialog({ open, onOpenChange, user, onSave }: UserDialogProps
       setLoading(false)
     }
   }
+
+  const isFormValid = formData.name && formData.email && formData.dateOfBirth && !emailError
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -90,9 +128,11 @@ export function UserDialog({ open, onOpenChange, user, onSave }: UserDialogProps
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={handleEmailChange}
+                className={emailError ? "border-red-500" : ""}
                 required
               />
+              {emailError && <p className="text-sm text-red-500">{emailError}</p>}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="dateOfBirth">Дата рождения</Label>
@@ -109,7 +149,7 @@ export function UserDialog({ open, onOpenChange, user, onSave }: UserDialogProps
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
               Отмена
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading || !isFormValid}>
               {loading ? "Сохранение..." : "Сохранить"}
             </Button>
           </DialogFooter>
