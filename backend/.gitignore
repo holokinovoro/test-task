@@ -1,0 +1,53 @@
+## ------------------------------
+## .NET / ASP.NET Core
+## ------------------------------
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+.vscode/
+launchSettings.json
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+*.coverage
+*.coveragexml
+
+# Backup & generated files
+*.bak
+*.tmp
+*.temp
+*.swp
+*.orig
+
+# NuGet packages
+*.nupkg
+*.snupkg
+# Uncomment next line if you don't want to keep lock file
+# packages.lock.json
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# DotNet tools
+.d
