@@ -19,7 +19,7 @@
 
 1. **Клонируйте репозиторий:**
    ```bash
-   git clone https://github.com/<твое_имя>/user-phone-management.git
+   git clone https://github.com/holokinovoro/test-task.git
    cd user-phone-management
 2. **Запустите через docker-compose**
   docker compose up --build
